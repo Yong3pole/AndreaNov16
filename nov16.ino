@@ -155,11 +155,17 @@ void loop() {
 void sendSMS() {
   if (WiFi.status() == WL_CONNECTED) {
     HTTPClient http;
-    http.begin(apiUrl); // Specify the API URL
-    http.addHeader("Content-Type", "application/json"); // Specify the content type
-
-    // Create the JSON data
-    String jsonData = "{\"api_token\":\"" + apiToken + "\",\"phone_number\":\"" + phoneNumber + "\",\"message\":\"" + message + "\"}";
+    
+    // Define the API URL
+    String apiUrl = "https://app.philsms.com/api/v3/sms/send";
+    
+    // Specify the content type and authorization header
+    http.begin(apiUrl);
+    http.addHeader("Content-Type", "application/json");
+    http.addHeader("Authorization", "Bearer 1179|EkuFgMmv7JYBgb0qwf5ZD6kZWKrvuqFyGHGb9g04"); // Replace with your actual token
+    
+    // Create the JSON payload
+    String jsonData = "{\"sender_id\":\"PhilSMS\",\"recipient\":\"+639055501894,+639308024299\",\"message\":\"" + message + "\"}";
 
     // Send POST request
     int httpResponseCode = http.POST(jsonData);
@@ -178,3 +184,4 @@ void sendSMS() {
     Serial.println("WiFi not connected");
   }
 }
+
